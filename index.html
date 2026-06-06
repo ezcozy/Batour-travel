@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Batour Travel | Umroh & Haji Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --deep-green: #0a2e1f;
+            --dark-green: #0d3b26;
+            --medium-green: #145c38;
+            --emerald: #1a7a4c;
+            --gold: #c9a050;
+            --gold-light: #d4af6e;
+            --gold-pale: #e8d5b0;
+            --gold-shimmer: #f0dfc0;
+            --white: #ffffff;
+            --off-white: #faf8f4;
+            --cream: #f5f0e6;
+            --dark: #1a1a1a;
+            --text-dark: #2c2c2c;
+            --text-light: #5a5a5a;
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(201, 160, 80, 0.3);
+            --shadow-gold: 0 8px 32px rgba(201, 160, 80, 0.15);
+            --shadow-dark: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --transition-smooth: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--off-white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--off-white);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--gold), var(--gold-light));
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+
+        /* Loading Screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--deep-green);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .loader-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 8vw, 2.8rem);
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+            animation: loaderPulse 1.5s ease-in-out infinite;
+        }
+        .loader-sub {
+            font-size: 0.85rem;
+            color: var(--gold-pale);
+            letter-spacing: 6px;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+        .loader-ring {
+            margin-top: 30px;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(201, 160, 80, 0.3);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes loaderPulse {
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.06);
+            }
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Floating Ornaments (hidden on very small screens, visible on tablets and up) */
+        .floating-ornament {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.04;
+            font-size: 12rem;
+            color: var(--gold);
+            animation: floatOrnament 20s ease-in-out infinite;
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .floating-ornament {
+                display: block;
+            }
+            .floating-ornament.top-right {
+                top: -60px;
+                right: -40px;
+                animation-delay: 0s;
+            }
+            .floating-ornament.bottom-left {
+                bottom: -80px;
+                left: -40px;
+                animation-delay: -7s;
+                font-size: 10rem;
+            }
+            .floating-ornament.mid-right {
+                top: 50%;
+                right: -20px;
+                animation-delay: -14s;
+                font-size: 8rem;
+                opacity: 0.03;
+            }
+        }
+        @keyframes floatOrnament {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-30px) rotate(3deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(-2deg);
+            }
+            75% {
+                transform: translateY(-40px) rotate(1deg);
+            }
+        }
+
+        /* Particles Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition-smooth);
+            background: transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(10, 46, 31, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 10px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+            border-bottom: 1px solid rgba(201, 160, 80, 0.2);
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+        .nav-logo .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--deep-green);
+            box-shadow: 0 4px 20px rgba(201, 160, 80, 0.4);
+            transition: var(--transition-bounce);
+            overflow: hidden;
+        }
+        .nav-logo .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+        .nav-logo .fallback-icon {
+            display: none;
+        }
+        .nav-logo:hover .logo-icon {
+            transform: scale(1.1) rotate(-10deg);
+            box-shadow: 0 8px 30px rgba(201, 160, 80, 0.6);
+        }
+        .nav-logo .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+        .nav-logo .logo-text span {
+            display: block;
+            font-size: 0.65rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 400;
+            letter-spacing: 4px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 10px 18px;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+        .nav-links a:hover {
+            color: var(--gold);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .nav-links .btn-nav {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: var(--deep-green) !important;
+            font-weight: 700;
+            padding: 11px 24px;
+            border-radius: 50px;
+            box-shadow: 0 4px 18px rgba(201, 160, 80, 0.35);
+            transition: var(--transition-bounce);
+            letter-spacing: 0.5px;
+        }
+        .nav-links .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(201, 160, 80, 0.55);
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-shimmer));
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 8px;
+        }
+        .hamburger span {
+            width: 30px;
+            height: 2.5px;
+            background: var(--white);
+            border-radius: 10px;
+            transition: var(--transition-smooth);
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        @media (max-width: 968px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(10, 46, 31, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 100px 30px 40px;
+                gap: 6px;
+                transition: var(--transition-smooth);
+                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+                border-left: 1px solid rgba(201, 160, 80, 0.2);
+            }
+            .nav-links.active {
+                right: 0;
+            }
+            .nav-links a {
+                font-size: 1rem;
+                padding: 14px 20px;
+                width: 100%;
+                text-align: center;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .nav-logo .logo-text {
+                font-size: 1.2rem;
+            }
+            .nav-logo .logo-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(160deg, #061a10 0%, #0a2e1f 25%, #0d3b26 50%, #0a2e1f 75%, #061a10 100%);
+            overflow: hidden;
+            z-index: 1;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(201, 160, 80, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(201, 160, 80, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(26, 122, 76, 0.06) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite;
+            z-index: 0;
+        }
+        @keyframes heroGlow {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(2%, -1%) scale(1.02);
+            }
+            66% {
+                transform: translate(-1%, 1%) scale(0.98);
+            }
+        }
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: repeating-linear-gradient(45deg,
+                    var(--gold) 0px,
+                    var(--gold) 1px,
+                    transparent 1px,
+                    transparent 30px),
+                repeating-linear-gradient(-45deg,
+                    var(--gold) 0px,
+                    var(--gold) 1px,
+                    transparent 1px,
+                    transparent 30px);
+            z-index: 0;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 30px 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .hero-content {
+            color: var(--white);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(201, 160, 80, 0.15);
+            border: 1px solid rgba(201, 160, 80, 0.4);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.8s ease 0.15s forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .hero-content h1 .gold-text {
+            background: linear-gradient(135deg, var(--gold), var(--gold-shimmer), var(--gold-light), var(--gold));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmerText 3s ease-in-out infinite;
+        }
+        @keyframes shimmerText {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 30px;
+            max-width: 480px;
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.45s forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--gold), #b8933f);
+            color: var(--deep-green);
+            font-weight: 700;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 30px rgba(201, 160, 80, 0.4);
+            transition: var(--transition-bounce);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
+            animation: btnShine 3s ease-in-out infinite;
+        }
+        @keyframes btnShine {
+            0%,
+            100% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+            50% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 40px rgba(201, 160, 80, 0.55);
+        }
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 600;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            transition: var(--transition-smooth);
+        }
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(201, 160, 80, 0.08);
+        }
+        .hero-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.35s forwards;
+            opacity: 0;
+            animation-fill-mode: forwards;
+            position: relative;
+        }
+        .hero-kaaba-container {
+            position: relative;
+            width: 320px;
+            height: 380px;
+            perspective: 800px;
+        }
+        .hero-kaaba {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: kaabaFloat 6s ease-in-out infinite;
+        }
+        @keyframes kaabaFloat {
+            0%,
+            100% {
+                transform: translateY(0) rotateY(0deg);
+            }
+            25% {
+                transform: translateY(-18px) rotateY(2deg);
+            }
+            50% {
+                transform: translateY(-8px) rotateY(-1deg);
+            }
+            75% {
+                transform: translateY(-22px) rotateY(1deg);
+            }
+        }
+        .kaaba-shape {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 200px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-radius: 8px;
+            box-shadow: 0 30px 80px rgba(201, 160, 80, 0.35), 0 0 0 3px rgba(201, 160, 80, 0.5),
+                0 0 0 6px rgba(201, 160, 80, 0.2), 0 0 0 10px rgba(201, 160, 80, 0.08);
+            position: relative;
+        }
+        .kaaba-shape::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 2px 2px 0 0;
+            box-shadow: 0 0 20px rgba(201, 160, 80, 0.6);
+        }
+        .kaaba-gold-strip {
+            position: absolute;
+            top: 30%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gold);
+            box-shadow: 0 0 15px rgba(201, 160, 80, 0.5);
+        }
+        .kaaba-gold-strip:nth-child(2) {
+            top: 60%;
+        }
+        .kaaba-gold-strip:nth-child(3) {
+            top: 75%;
+            height: 2px;
+            opacity: 0.7;
+        }
+        .hero-glow-ring {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 60px;
+            background: radial-gradient(ellipse, rgba(201, 160, 80, 0.5) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateX(-50%) scale(1.15);
+            }
+        }
+        .hero-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(2);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 968px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
+                padding: 110px 20px 60px;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .hero-content p {
+                margin: 0 auto 25px;
+                font-size: 1rem;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-kaaba-container {
+                width: 240px;
+                height: 300px;
+            }
+            .kaaba-shape {
+                width: 140px;
+                height: 160px;
+            }
+            .hero-glow-ring {
+                width: 220px;
+                bottom: -30px;
+            }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 30px;
+            position: relative;
+            z-index: 1;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-header .section-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        .section-header .section-label::before,
+        .section-header .section-label::after {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+            vertical-align: middle;
+            margin: 0 12px;
+            opacity: 0.6;
+        }
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 2.6rem);
+            font-weight: 700;
+            color: var(--deep-green);
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .section-header h2 .gold-accent {
+            color: var(--gold);
+        }
+        .section-header p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        /* About */
+        #about {
+            background: var(--white);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+        .about-image-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-dark);
+        }
+        .about-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 20px;
+            transition: var(--transition-smooth);
+        }
+        .about-image-wrapper:hover img {
+            transform: scale(1.04);
+        }
+        .about-image-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .about-image-badge {
+            position: absolute;
+            bottom: -25px;
+            right: -25px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-shadow: var(--shadow-gold);
+            z-index: 2;
+            animation: badgePulse 3s ease-in-out infinite;
+        }
+        @keyframes badgePulse {
+            0%,
+            100% {
+                box-shadow: 0 8px 32px rgba(201, 160, 80, 0.3);
+            }
+            50% {
+                box-shadow: 0 16px 48px rgba(201, 160, 80, 0.55);
+            }
+        }
+        .about-image-badge span {
+            font-weight: 800;
+            color: var(--deep-green);
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+        .about-image-badge small {
+            font-size: 0.6rem;
+            color: var(--deep-green);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .about-features {
+            list-style: none;
+            display: grid;
+            gap: 18px;
+        }
+        .about-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--off-white);
+            border-radius: 16px;
+            transition: var(--transition-smooth);
+            border-left: 3px solid transparent;
+        }
+        .about-features li:hover {
+            border-left-color: var(--gold);
+            background: #fdfaf3;
+            transform: translateX(6px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        .about-features li .feature-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            background: linear-gradient(135deg, var(--deep-green), var(--medium-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        .about-features li h4 {
+            font-weight: 700;
+            color: var(--deep-green);
+            margin-bottom: 2px;
+            font-size: 1rem;
+        }
+        .about-features li p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        @media (max-width: 968px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .about-image-badge {
+                width: 75px;
+                height: 75px;
+                bottom: -18px;
+                right: -18px;
+            }
+            .about-image-badge span {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Packages */
+        #packages {
+            background: var(--off-white);
+        }
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .package-card {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.07);
+            transition: var(--transition-bounce);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+        }
+        .package-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-dark);
+            border-color: rgba(201, 160, 80, 0.3);
+        }
+        .package-card.featured {
+            border: 2px solid var(--gold);
+            box-shadow: var(--shadow-gold);
+            transform: scale(1.03);
+        }
+        .package-card.featured:hover {
+            transform: scale(1.03) translateY(-12px);
+        }
+        .package-card .card-ribbon {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--gold);
+            color: var(--deep-green);
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 40px;
+            transform: rotate(45deg);
+            letter-spacing: 1px;
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .package-card .card-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        .package-card .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        .package-card:hover .card-image img {
+            transform: scale(1.08);
+        }
+        .package-card .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(10, 46, 31, 0.85) 100%);
+        }
+        .package-card .card-body {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .package-card .card-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--deep-green);
+            margin-bottom: 4px;
+        }
+        .package-card .card-body .card-duration {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .package-card .card-body .card-features {
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 16px;
+            flex: 1;
+        }
+        .package-card .card-body .card-features li {
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .package-card .card-body .card-features li i {
+            color: var(--emerald);
+            font-size: 0.8rem;
+        }
+        .package-card .card-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--deep-green);
+            margin-bottom: 16px;
+        }
+        .package-card .card-price small {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-light);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .package-card .btn-card {
+            display: block;
+            text-align: center;
+            background: var(--deep-green);
+            color: var(--white);
+            padding: 13px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+            border: 2px solid var(--deep-green);
+        }
+        .package-card .btn-card:hover {
+            background: var(--gold);
+            color: var(--deep-green);
+            border-color: var(--gold);
+            box-shadow: 0 6px 24px rgba(201, 160, 80, 0.35);
+        }
+        .package-card.featured .btn-card {
+            background: linear-gradient(135deg, var(--gold), #b8933f);
+            color: var(--deep-green);
+            border: none;
+            font-weight: 700;
+        }
+        .package-card.featured .btn-card:hover {
+            box-shadow: 0 10px 30px rgba(201, 160, 80, 0.5);
+            transform: scale(1.03);
+        }
+
+        @media (max-width: 968px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            .package-card.featured {
+                transform: scale(1);
+            }
+            .package-card.featured:hover {
+                transform: scale(1) translateY(-12px);
+            }
+        }
+
+        /* Visa Section */
+        .visa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .visa-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: var(--transition-bounce);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .visa-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-dark);
+            border-color: rgba(201,160,80,0.3);
+        }
+        .visa-card .visa-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        .visa-card .visa-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        .visa-card:hover .visa-image img {
+            transform: scale(1.05);
+        }
+        .visa-card .visa-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .visa-card .visa-body h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--deep-green);
+            margin-bottom: 5px;
+        }
+        .visa-card .visa-price {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .visa-card .visa-syarat {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            flex: 1;
+        }
+        .visa-card .btn-visa {
+            background: var(--deep-green);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            display: inline-block;
+            margin-top: auto;
+        }
+        .visa-card .btn-visa:hover {
+            background: var(--gold);
+            color: var(--deep-green);
+        }
+
+        /* Testimonials */
+        #testimonials {
+            background: var(--white);
+        }
+        .testimonial-slider {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            gap: 20px;
+        }
+        .testimonial-card {
+            min-width: 100%;
+            background: var(--off-white);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+        .testimonial-card .quote-icon {
+            font-size: 4rem;
+            color: rgba(201, 160, 80, 0.2);
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+        .testimonial-card .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--deep-green);
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+        .testimonial-card .testimonial-text {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .testimonial-card .testimonial-name {
+            font-weight: 700;
+            color: var(--deep-green);
+        }
+        .testimonial-card .testimonial-role {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 500;
+        }
+        .testimonial-dots {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .testimonial-dots button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .testimonial-dots button.active {
+            background: var(--gold);
+            transform: scale(1.3);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--deep-green), var(--dark-green), var(--medium-green));
+            padding: 70px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(201, 160, 80, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cta-banner .container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        .cta-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+        .cta-banner h2 .gold-text {
+            color: var(--gold);
+        }
+        .cta-banner p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 28px;
+            font-size: 1.1rem;
+        }
+        .cta-banner .btn-primary {
+            font-size: 1.1rem;
+            padding: 17px 36px;
+        }
+
+        /* Footer */
+        footer {
+            background: #051a10;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 60px 30px 30px;
+            position: relative;
+            z-index: 1;
+        }
+        footer .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        footer h4 {
+            color: var(--white);
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+        footer a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            font-size: 0.9rem;
+        }
+        footer a:hover {
+            color: var(--gold);
+        }
+        footer .footer-links {
+            list-style: none;
+            display: grid;
+            gap: 8px;
+        }
+        footer .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+        }
+        .footer-logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            footer .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            footer .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+            animation: waBounce 2s ease-in-out infinite;
+            transition: var(--transition-bounce);
+            text-decoration: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.15);
+            box-shadow: 0 14px 40px rgba(37, 211, 102, 0.55);
+        }
+        @keyframes waBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .section {
+                padding: 60px 16px;
+            }
+            .btn-primary,
+            .btn-outline {
+                padding: 12px 22px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="loader-logo">BATOUR</div>
+        <div class="loader-sub">Travel</div>
+        <div class="loader-ring"></div>
+    </div>
+
+    <div class="floating-ornament top-right">ﷲ</div>
+    <div class="floating-ornament bottom-left">ﷲ</div>
+    <div class="floating-ornament mid-right">ﷲ</div>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">
+                <div class="logo-icon">
+                    <img src="batur.jpg" alt="Batour Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                    <i class="fa-solid fa-kaaba fallback-icon" style="display:none;"></i>
+                </div>
+                <div class="logo-text">BATOUR<span>Travel</span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#packages">Paket</a></li>
+                <li><a href="#visa">Visa</a></li>
+                <li><a href="#testimonials">Testimoni</a></li>
+                <li><a href="https://wa.me/628131022291" class="btn-nav">Daftar Sekarang</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-pattern"></div>
+        <div class="hero-stars" id="heroStars"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">✦ Terpercaya Sejak 2015 ✦</div>
+                <h1>Wujudkan Mimpi <br><span class="gold-text">Umroh & Haji</span> Anda</h1>
+                <p>Bersama Batour Travel, kami hadirkan perjalanan ibadah yang khusyuk, nyaman, dan penuh berkah. Dengan bimbingan ulama berpengalaman dan layanan premium.</p>
+                <div class="hero-buttons">
+                    <a href="#packages" class="btn-primary"><i class="fa-solid fa-ticket"></i> Lihat Paket</a>
+                    <a href="https://wa.me/628131022291" class="btn-outline"><i class="fa-solid fa-phone"></i> Konsultasi Gratis</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-kaaba-container">
+                    <div class="hero-kaaba">
+                        <div class="kaaba-shape">
+                            <div class="kaaba-gold-strip"></div>
+                            <div class="kaaba-gold-strip"></div>
+                            <div class="kaaba-gold-strip"></div>
+                        </div>
+                    </div>
+                    <div class="hero-glow-ring"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="about">
+        <div class="section-header">
+            <div class="section-label">Mengapa Memilih Kami</div>
+            <h2>Keunggulan <span class="gold-accent">Batour</span> Travel</h2>
+            <p>Amanah, profesional, dan berpengalaman dalam melayani perjalanan suci Anda.</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-image-wrapper reveal">
+                <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=800&q=80"
+                alt="Masjidil Haram"
+                style="width:100%;height:420px;object-fit:cover;"
+                onerror="this.style.background='linear-gradient(135deg,#0a2e1f,#145c38)';this.style.minHeight='420px';">
+                <div class="about-image-badge">
+                    <span>9+</span>
+                    <small>Tahun</small>
+                </div>
+            </div>
+            <div>
+                <ul class="about-features">
+                    <li>
+                        <div class="feature-icon"><i class="fa-solid fa-user-graduate"></i></div>
+                        <div>
+                            <h4>Bimbingan Ulama</h4>
+                            <p>Didampingi ustaz berpengalaman selama perjalanan, manasik lengkap & berkualitas.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon"><i class="fa-solid fa-hotel"></i></div>
+                        <div>
+                            <h4>Hotel Strategis</h4>
+                            <p>Hotel bintang 4-5 dekat Masjidil Haram & Masjid Nabawi, kenyamanan maksimal.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <h4>Izin Resmi Kemenag</h4>
+                            <p>Berizin resmi & terdaftar di Kementerian Agama RI, perjalanan Anda terjamin aman.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                        <div>
+                            <h4>Layanan Premium</h4>
+                            <p>Porsi catering eksklusif, transportasi VIP, dan pelayanan personal 24 jam.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="packages">
+        <div class="section-header">
+            <div class="section-label">Paket Perjalanan</div>
+            <h2>Pilih <span class="gold-accent">Paket</span> Terbaik Anda</h2>
+            <p>Beragam pilihan paket umroh dan haji dengan fasilitas premium.</p>
+        </div>
+        <div class="packages-grid">
+            <div class="package-card reveal">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?w=600&q=80"
+                    alt="Umroh Reguler"
+                    onerror="this.style.background='linear-gradient(135deg,#0d3b26,#145c38)';this.style.minHeight='220px';">
+                    <div class="card-image-overlay"></div>
+                </div>
+                <div class="card-body">
+                    <h3>Umroh Reguler</h3>
+                    <div class="card-duration">12 Hari · Makkah & Madinah</div>
+                    <ul class="card-features">
+                        <li><i class="fa-solid fa-check-circle"></i> Hotel Bintang 4</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Visa & Tiket Pesawat</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Manasik & Bimbingan</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Transportasi Bus VIP</li>
+                    </ul>
+                    <div class="card-price">Rp 28<span>jt</span> <small>/ orang</small></div>
+                    <a href="https://wa.me/628131022291" class="btn-card">Pilih Paket</a>
+                </div>
+            </div>
+            <div class="package-card featured reveal">
+                <div class="card-ribbon">BEST SELLER</div>
+                <div class="card-image">
+                    <img src="umrohvip.jpg"
+                    alt="Masjid Nabawi"
+                    onerror="this.style.background='linear-gradient(135deg,#0d3b26,#1a7a4c)';this.style.minHeight='220px';">
+                    <div class="card-image-overlay"></div>
+                </div>
+                <div class="card-body">
+                    <h3>Umroh VIP</h3>
+                    <div class="card-duration">15 Hari · Makkah & Madinah</div>
+                    <ul class="card-features">
+                        <li><i class="fa-solid fa-check-circle"></i> Hotel Bintang 5 (Haram View)</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Visa Prioritas</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Private Manasik</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Catering Eksklusif</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Ziarah VIP</li>
+                    </ul>
+                    <div class="card-price">Rp 45<span>jt</span> <small>/ orang</small></div>
+                    <a href="https://wa.me/628131022291" class="btn-card">Pilih Paket</a>
+                </div>
+            </div>
+            <div class="package-card reveal">
+                <div class="card-image">
+                    <img src="hajiplus.jpg"
+                    alt="Ka'bah Makkah"
+                    onerror="this.style.background='linear-gradient(135deg,#0d3b26,#145c38)';this.style.minHeight='220px';">
+                    <div class="card-image-overlay"></div>
+                </div>
+                <div class="card-body">
+                    <h3>Haji Plus</h3>
+                    <div class="card-duration">25 Hari · Full Service</div>
+                    <ul class="card-features">
+                        <li><i class="fa-solid fa-check-circle"></i> Hotel Dekat Masjid</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Bimbingan Intensif</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Perlengkapan Haji</li>
+                        <li><i class="fa-solid fa-check-circle"></i> Pendampingan 24 Jam</li>
+                    </ul>
+                    <div class="card-price">Rp 85<span>jt</span> <small>/ orang</small></div>
+                    <a href="https://wa.me/628131022291" class="btn-card">Pilih Paket</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="visa">
+        <div class="section-header">
+            <div class="section-label">Layanan Visa</div>
+            <h2>Pengurusan <span class="gold-accent">Visa Umroh</span></h2>
+            <p>Proses cepat, aman, dan terpercaya. Pilih paket sesuai kebutuhan Anda.</p>
+        </div>
+        <div class="visa-grid">
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa1.jpg" alt="Visa Full Syarat Satuan" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Visa Umroh Full Syarat Satuan</h4>
+                    <div class="visa-price">490 SAR</div>
+                    <div class="visa-syarat">
+                        <strong>Syarat:</strong> Paspor, KTP, Tiket PP, Booking hotel terdaftar Nusuk, stay sesuai tiket PP. <br>
+                        <em>* Exclude bus</em>
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa2.jpg" alt="Visa Full Syarat Group" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Visa Umroh Full Syarat Group + Bus</h4>
+                    <div class="visa-price">Harga Menyesuaikan Pax</div>
+                    <div class="visa-syarat">
+                        <strong>Syarat:</strong> Paspor, KTP, Tiket PP, Booking hotel terdaftar Nusuk, stay sesuai tiket PP.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa3.jpg" alt="Visa Tiket PP" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Visa Umroh + Tiket PP</h4>
+                    <div class="visa-price">Start from Rp 2.800.000</div>
+                    <div class="visa-syarat">
+                        <strong>Syarat:</strong> Paspor, KTP, Tiket PP (harga kondisional).
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa4.jpg" alt="Visa Longstay Mutowif" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Visa Umroh Longstay (Mutowif)</h4>
+                    <div class="visa-price">Rp 4.400.000</div>
+                    <div class="visa-syarat">
+                        <strong>Syarat:</strong> Scan paspor, KTP, tiket berangkat.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa5.jpg" alt="Visa Mutowif Plus Hotel" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Visa Umroh Mutowif + Penginapan Hotel Nusuk</h4>
+                    <div class="visa-price">Rp 8.200.000 <small>(80 hari)</small></div>
+                    <div class="visa-syarat">
+                        <strong>Syarat:</strong> Scan paspor, KTP, tiket berangkat.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="testimonials">
+        <div class="section-header">
+            <div class="section-label">Testimoni Jamaah</div>
+            <h2>Apa Kata <span class="gold-accent">Mereka</span></h2>
+            <p>Cerita bahagia dari jamaah yang telah berangkat bersama kami.</p>
+        </div>
+        <div class="testimonial-slider">
+            <div class="testimonial-track" id="testimonialTrack">
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <div class="avatar">AS</div>
+                    <p class="testimonial-text">"Alhamdulillah, perjalanan umroh bersama Batour sangat berkesan. Pelayanan luar biasa, hotel dekat masjid, dan bimbingan ustaznya sangat menyejukkan hati. InsyaAllah tahun depan mau berangkat lagi!"</p>
+                    <div class="testimonial-name">Ahmad Syahputra</div>
+                    <div class="testimonial-role">Jamaah Umroh VIP 2025</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <div class="avatar">RN</div>
+                    <p class="testimonial-text">"Saya sangat puas dengan Batour Travel. Dari awal pendaftaran sampai pulang, semua diurus dengan profesional. Terima kasih sudah membuat ibadah haji saya lancar dan khusyuk."</p>
+                    <div class="testimonial-name">Rini Nuraini</div>
+                    <div class="testimonial-role">Jamaah Haji Plus 2024</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">"</div>
+                    <div class="avatar">MH</div>
+                    <p class="testimonial-text">"Orang tua saya sangat bahagia. Pihak travel sangat perhatian, terutama untuk jamaah lansia. Makanan enak, hotel nyaman, semua terasa istimewa. Highly recommended!"</p>
+                    <div class="testimonial-name">Muhammad Hafiz</div>
+                    <div class="testimonial-role">Keluarga Jamaah Umroh Reguler</div>
+                </div>
+            </div>
+            <div class="testimonial-dots" id="testimonialDots"></div>
+        </div>
+    </section>
+
+    <section class="cta-banner reveal" id="cta">
+        <div class="container">
+            <h2>Siap Berangkat ke <span class="gold-text">Tanah Suci?</span></h2>
+            <p>Daftarkan diri Anda sekarang juga! Tim kami siap membantu mewujudkan perjalanan ibadah impian Anda dengan pelayanan terbaik.</p>
+            <a href="https://wa.me/628131022291" class="btn-primary">
+                <i class="fa-brands fa-whatsapp"></i> Hubungi Kami Sekarang
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo-text">BATOUR</div>
+                <p style="margin-top:8px;font-size:0.9rem;">Travel Umroh Haji Premium. Berizin resmi Kemenag RI. Amanah & profesional.</p>
+            </div>
+            <div>
+                <h4>Menu</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#about">Tentang Kami</a></li>
+                    <li><a href="#packages">Paket</a></li>
+                    <li><a href="#visa">Visa</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Kontak</h4>
+                <ul class="footer-links">
+                    <li><a href="https://wa.me/628131022291"><i class="fa-brands fa-whatsapp"></i> 0813-1022-291</a></li>
+                    <li><a href="#"><i class="fa-solid fa-envelope"></i> info@batourtravel.id</a></li>
+                    <li><a href="#"><i class="fa-solid fa-location-dot"></i> Jakarta, Indonesia</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Sosial Media</h4>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fa-brands fa-instagram"></i> @batourtravel</a></li>
+                    <li><a href="#"><i class="fa-brands fa-facebook"></i> Batour Travel</a></li>
+                    <li><a href="#"><i class="fa-brands fa-youtube"></i> Batour Official</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 Batour Travel. All rights reserved. | Izin Kemenag RI No. U.XXX/2025
+        </div>
+    </footer>
+
+    <a href="https://wa.me/628131022291" class="whatsapp-float" title="Hubungi Kami" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+            }, 1500);
+        });
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let canvasW, canvasH;
+
+        function resizeCanvas() {
+            canvasW = canvas.width = window.innerWidth;
+            canvasH = canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((canvasW * canvasH) / 18000);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvasW,
+                    y: Math.random() * canvasH,
+                    r: Math.random() * 1.5 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random() * 0.5 + 0.2,
+                    pulseSpeed: Math.random() * 0.02 + 0.005,
+                });
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvasW, canvasH);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0) p.x = canvasW;
+                if (p.x > canvasW) p.x = 0;
+                if (p.y < 0) p.y = canvasH;
+                if (p.y > canvasH) p.y = 0;
+                p.opacity += p.pulseSpeed;
+                if (p.opacity > 0.7 || p.opacity < 0.15) p.pulseSpeed *= -1;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(201,160,80,${p.opacity})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        const heroStarsContainer = document.getElementById('heroStars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+            star.style.width = (Math.random() * 2.5 + 1) + 'px';
+            star.style.height = star.style.width;
+            heroStarsContainer.appendChild(star);
+        }
+
+        const track = document.getElementById('testimonialTrack');
+        const dotsContainer = document.getElementById('testimonialDots');
+        const slides = document.querySelectorAll('.testimonial-card');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+        const dots = dotsContainer.querySelectorAll('button');
+        updateDots();
+
+        function goToSlide(index) {
+            currentSlide = index;
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+        }
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            updateDots();
+        }, 5000);
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
