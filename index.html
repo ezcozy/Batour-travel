@@ -565,98 +565,67 @@
             animation-fill-mode: forwards;
             position: relative;
         }
-        .hero-kaaba-container {
+
+        /* ============================================= */
+        /* === KA'BAH (gambar kaaba.jpg, latar hitam)  === */
+        /* === Disesuaikan: persegi 1:1, latar nyatu    === */
+        /* ============================================= */
+        .kaaba-scene {
             position: relative;
-            width: 320px;
-            height: 380px;
-            perspective: 800px;
-        }
-        .hero-kaaba {
             width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: kaabaFloat 6s ease-in-out infinite;
+            max-width: 440px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        @keyframes kaabaFloat {
-            0%,
-            100% {
-                transform: translateY(0) rotateY(0deg);
-            }
-            25% {
-                transform: translateY(-18px) rotateY(2deg);
-            }
-            50% {
-                transform: translateY(-8px) rotateY(-1deg);
-            }
-            75% {
-                transform: translateY(-22px) rotateY(1deg);
-            }
-        }
-        .kaaba-shape {
+        /* Aura cahaya emas di belakang Ka'bah */
+        .kaaba-aura {
             position: absolute;
-            bottom: 0;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 180px;
-            height: 200px;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
-            border-radius: 8px;
-            box-shadow: 0 30px 80px rgba(201, 160, 80, 0.35), 0 0 0 3px rgba(201, 160, 80, 0.5),
-                0 0 0 6px rgba(201, 160, 80, 0.2), 0 0 0 10px rgba(201, 160, 80, 0.08);
-            position: relative;
-        }
-        .kaaba-shape::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 8px;
-            background: var(--gold);
-            border-radius: 2px 2px 0 0;
-            box-shadow: 0 0 20px rgba(201, 160, 80, 0.6);
-        }
-        .kaaba-gold-strip {
-            position: absolute;
-            top: 30%;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--gold);
-            box-shadow: 0 0 15px rgba(201, 160, 80, 0.5);
-        }
-        .kaaba-gold-strip:nth-child(2) {
-            top: 60%;
-        }
-        .kaaba-gold-strip:nth-child(3) {
-            top: 75%;
-            height: 2px;
-            opacity: 0.7;
-        }
-        .hero-glow-ring {
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 280px;
-            height: 60px;
-            background: radial-gradient(ellipse, rgba(201, 160, 80, 0.5) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            width: 92%;
+            height: 92%;
+            background: radial-gradient(circle, rgba(201,160,80,0.22) 0%, transparent 60%);
             border-radius: 50%;
-            animation: glowPulse 3s ease-in-out infinite;
+            animation: glowPulse 4s ease-in-out infinite;
+            z-index: 0;
+            pointer-events: none;
         }
         @keyframes glowPulse {
-            0%,
-            100% {
-                opacity: 0.5;
-                transform: translateX(-50%) scale(1);
-            }
-            50% {
-                opacity: 0.8;
-                transform: translateX(-50%) scale(1.15);
-            }
+            0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+            50%      { opacity: 0.95; transform: translate(-50%, -50%) scale(1.06); }
         }
+        .kaaba-photo-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: kaabaFloat 6s ease-in-out infinite;
+            z-index: 2;
+        }
+        @keyframes kaabaFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-14px); }
+        }
+        .kaaba-photo-wrap img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;       /* tampil utuh, sesuai gambar persegi */
+            /* latar hitam gambar menyatu dengan latar hijau hero */
+            mix-blend-mode: screen;
+            transition: var(--transition-smooth);
+        }
+        .kaaba-photo-wrap:hover img {
+            transform: scale(1.05);
+        }
+        /* bingkai dinonaktifkan agar Ka'bah tampak mengambang */
+        .kaaba-frame { display: none; }
+
         .hero-stars {
             position: absolute;
             top: 0;
@@ -712,17 +681,10 @@
             .hero-buttons {
                 justify-content: center;
             }
-            .hero-kaaba-container {
-                width: 240px;
-                height: 300px;
-            }
-            .kaaba-shape {
-                width: 140px;
-                height: 160px;
-            }
-            .hero-glow-ring {
-                width: 220px;
-                bottom: -30px;
+            .kaaba-scene {
+                width: 300px;
+                height: 320px;
+                transform: scale(0.82);
             }
         }
 
@@ -1397,9 +1359,9 @@
         <div class="loader-ring"></div>
     </div>
 
-    <div class="floating-ornament top-right">ﷲ</div>
-    <div class="floating-ornament bottom-left">ﷲ</div>
-    <div class="floating-ornament mid-right">ﷲ</div>
+    <div class="floating-ornament top-right">&#65010;</div>
+    <div class="floating-ornament bottom-left">&#65010;</div>
+    <div class="floating-ornament mid-right">&#65010;</div>
 
     <canvas id="particles-canvas"></canvas>
 
@@ -1416,7 +1378,7 @@
                 <li><a href="#home">Beranda</a></li>
                 <li><a href="#about">Tentang</a></li>
                 <li><a href="#packages">Paket</a></li>
-                <li><a href="#visa">Visa</a></li>
+                <li><a href="#visa">Visa & Layanan</a></li>
                 <li><a href="#testimonials">Testimoni</a></li>
                 <li><a href="https://wa.me/628131022291" class="btn-nav">Daftar Sekarang</a></li>
             </ul>
@@ -1431,7 +1393,7 @@
         <div class="hero-stars" id="heroStars"></div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">✦ IZIN UMROH PPIU NO. 01022400356660002 ✦</div>
+                <div class="hero-badge">&#10022; IZIN UMROH PPIU NO. 01022400356660002 &#10022;</div>
                 <h1>Wujudkan Mimpi <br><span class="gold-text">Umroh & Haji</span> Anda</h1>
                 <p>Bersama Batour Travel, kami hadirkan perjalanan ibadah yang khusyuk, nyaman, dan penuh berkah. Dengan bimbingan ulama berpengalaman dan layanan premium.</p>
                 <div class="hero-buttons">
@@ -1440,15 +1402,13 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="hero-kaaba-container">
-                    <div class="hero-kaaba">
-                        <div class="kaaba-shape">
-                            <div class="kaaba-gold-strip"></div>
-                            <div class="kaaba-gold-strip"></div>
-                            <div class="kaaba-gold-strip"></div>
-                        </div>
+                <div class="kaaba-scene">
+                    <div class="kaaba-aura"></div>
+                    <div class="kaaba-photo-wrap">
+                        <img src="kaaba.jpg" alt="Ka'bah Masjidil Haram"
+                            onerror="this.style.opacity='0.15';">
+                        <div class="kaaba-frame"></div>
                     </div>
-                    <div class="hero-glow-ring"></div>
                 </div>
             </div>
         </div>
@@ -1580,9 +1540,9 @@
 
     <section class="section reveal" id="visa">
         <div class="section-header">
-            <div class="section-label">Layanan Visa</div>
-            <h2>Pengurusan <span class="gold-accent">Visa Umroh</span></h2>
-            <p>Proses cepat, aman, dan terpercaya. Pilih paket sesuai kebutuhan Anda.</p>
+            <div class="section-label">Visa & Layanan</div>
+            <h2>Pengurusan <span class="gold-accent">Visa & Layanan</span> Travel</h2>
+            <p>Proses cepat, aman, dan terpercaya. Pilih layanan sesuai kebutuhan Anda.</p>
         </div>
         <div class="visa-grid">
             <div class="visa-card">
@@ -1651,6 +1611,97 @@
                     <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
                 </div>
             </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa6.jpg" alt="Siskopatuh" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Siskopatuh</h4>
+                    <div class="visa-price">Hubungi Kami</div>
+                    <div class="visa-syarat">
+                        <strong>Layanan:</strong> Pendaftaran & input data jamaah pada Sistem Komputerisasi Pengelolaan Terpadu Umrah & Haji (Siskopatuh) Kemenag RI. Proses cepat & sesuai regulasi.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa7.jpg" alt="Tiket Pesawat" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Tiket Pesawat</h4>
+                    <div class="visa-price">Harga Terbaik</div>
+                    <div class="visa-syarat">
+                        <strong>Layanan:</strong> Pemesanan tiket pesawat domestik & internasional (PP/one way) untuk umroh, haji, maupun perjalanan umum. Berbagai maskapai tersedia.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa8.jpg" alt="Hotel" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Hotel</h4>
+                    <div class="visa-price">Mulai Sesuai Pilihan</div>
+                    <div class="visa-syarat">
+                        <strong>Layanan:</strong> Booking hotel di Makkah, Madinah, maupun kota lain. Pilihan bintang 3-5, dekat Masjidil Haram & Masjid Nabawi, terdaftar Nusuk.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa9.jpg" alt="Tiket Void" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Tiket Void</h4>
+                    <div class="visa-price">Hubungi Kami</div>
+                    <div class="visa-syarat">
+                        <strong>Layanan:</strong> Pembatalan / pembatalan ulang (void) tiket pesawat sesuai ketentuan maskapai. Dibantu proses cepat dan transparan.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa10.jpg" alt="Tiket Bus" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Tiket Bus</h4>
+                    <div class="visa-price">Harga Menyesuaikan</div>
+                    <div class="visa-syarat">
+                        <strong>Layanan:</strong> Penyewaan & tiket bus untuk transportasi jamaah antar kota suci dan ziarah. Armada nyaman & terpercaya.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa11.jpg" alt="Tiket Kereta Cepat Makkah Madinah" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Tiket Kereta Cepat Makkah - Madinah</h4>
+                    <div class="visa-price">Hubungi Kami</div>
+                    <div class="visa-syarat">
+                        <strong>Layanan:</strong> Pemesanan tiket kereta cepat Haramain rute Makkah - Madinah & sebaliknya. Perjalanan cepat, aman, dan nyaman.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
+            <div class="visa-card">
+                <div class="visa-image">
+                    <img src="visa12.jpg" alt="Layanan Handling" onerror="this.style.background='linear-gradient(135deg,#145c38,#0d3b26)';">
+                </div>
+                <div class="visa-body">
+                    <h4>Layanan Handling</h4>
+                    <div class="visa-price">Hubungi Kami</div>
+                    <div class="visa-syarat">
+                        <strong>Layanan:</strong> Pendampingan & handling jamaah di bandara dan kota suci (meet & greet, bagasi, mutawif, transportasi lokal). Praktis dan terurus.
+                    </div>
+                    <a href="https://wa.me/628131022291" class="btn-visa">Pesan via WhatsApp</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1710,7 +1761,7 @@
                     <li><a href="#home">Beranda</a></li>
                     <li><a href="#about">Tentang Kami</a></li>
                     <li><a href="#packages">Paket</a></li>
-                    <li><a href="#visa">Visa</a></li>
+                    <li><a href="#visa">Visa & Layanan</a></li>
                     <li><a href="#testimonials">Testimoni</a></li>
                 </ul>
             </div>
